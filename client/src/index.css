@@ -1,0 +1,22 @@
+@font-face {
+  font-family: "Pacifico";
+  src: local("Pacifico"), url(./fonts/Pacifico-Regular.ttf) format("truetype");
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-size: 16px;
+  font-family: Pacifico;
+}
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
