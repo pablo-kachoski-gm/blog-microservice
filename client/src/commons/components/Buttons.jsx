@@ -1,23 +1,29 @@
 import styled from "styled-components";
+import { ACTION_BUTTON_PRIMARY, DISABLED_COLOR } from "../constants/colors";
 
 export const SubmitButton = styled.button`
   padding: 0.5em 2em;
-  background-color: rgba(16, 29, 216, 1);
-  border: none;
+  background-color: ${({ disabled }) =>
+    disabled ? DISABLED_COLOR : ACTION_BUTTON_PRIMARY};
   color: white;
   text-align: center;
-  text-decoration: none;
   font-weight: bold;
   text-transform: uppercase;
   display: inline-block;
   font-size: 16px;
   margin: 4px 2px;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
 
-  &:focus {
-    background-color: rgba(16, 29, 216, 0.5);
+  &:hover {
+    background-color: ${({ disabled }) =>
+      disabled ? DISABLED_COLOR : ACTION_BUTTON_PRIMARY};
+    opacity: 0.5;
+  }
+  &:focus,
+  & {
     border: none;
     text-decoration: none;
+    outline: none;
   }
 `;

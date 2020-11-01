@@ -1,31 +1,49 @@
+import { useState } from "react";
 import styled from "styled-components";
+import { SubmitButton } from "../../../../commons/components/Buttons";
+import createPostAPI from "../../../api/createPost";
+import { PAGE_BACKGROUND, PRINCIPAL } from "../../../constants/colors";
 
-const PostsWrapper = styled.div`
-  width: 10vw;
-  padding: 2em 5em;
+const CommentWrapper = styled.div`
+  background-color: ${PAGE_BACKGROUND};
+  padding: 3em 2em;
 `;
-const SubmitButton = styled.button`
-  padding: 0.5em 2em;
-  background-color: #0f5bff;
-`;
+
 const FormContent = styled.div`
-  background-color: #a3a3a3;
+  background-color: ${PRINCIPAL}
   margin-bottom: 3em;
 `;
-const Form = styled.form`
-  background-color: #a3a3a3;
+const Form = styled.form``;
+const Title = styled.div`
+  margin-bottom: 0.5em;
 `;
-const CreatePosts = () => {
+const CreatePost = () => {
+  const [title, setTitle] = useState("");
+
+  const onInputChange = ({ target: { value } }) => setTitle(value);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const createPost = async () => {
+      try {
+        await createPostAPI({ title });
+        console.log(`Post ${title} created successfully`);
+      } catch (error) {
+        console.log("An error has ocurred.");
+      }
+    };
+    createPost();
+  };
+  const disabledSubmit = title?.trim().length === 0;
   return (
-    <PostsWrapper>
-      <Form>
+    <CommentWrapper>
+      <Form onSubmit={onSubmit}>
         <FormContent>
-          <div>Title</div>
-          <input />
+          <Title>Title</Title>
+          <input onChange={onInputChange} />
         </FormContent>
-        <SubmitButton>Submit</SubmitButton>
+        <SubmitButton disabled={disabledSubmit}>Submit</SubmitButton>
       </Form>
-    </PostsWrapper>
+    </CommentWrapper>
   );
 };
-export default CreatePosts;
+export default CreatePost;

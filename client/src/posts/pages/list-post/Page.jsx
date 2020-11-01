@@ -2,17 +2,22 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import LoadingScreen from "../../../commons/components/loading/LoadingScreen";
 import getPostsAPI from "../../api/getPosts";
+import { PAGE_BACKGROUND } from "../../constants/colors";
+import PostListItem from "./PostListItem";
 
 const PostsWrapper = styled.div`
-  background-color: #a3a3a3;
+  background-color: ${PAGE_BACKGROUND};
   width: 100%;
-  padding: 3em 2em;
+  padding: 1em 2em;
+  display: flex;
+  flex-direction: column;
 `;
-const Post = styled.li`
-  background-color: #a3a3a3;
-  width: 100%;
-  padding: 1em 1.2em;
-  list-style: none;
+const PostList = styled.ul`
+  padding-inline-start: 0;
+
+  & > *:not(:last-child) {
+    margin-bottom: 1.5em;
+  }
 `;
 
 const CreatePost = () => {
@@ -37,12 +42,13 @@ const CreatePost = () => {
     <>
       {loading && <LoadingScreen />}
       <PostsWrapper>
+        <h1>Posts</h1>
         {postList.length > 0 ? (
-          <ul>
+          <PostList>
             {postList.map(({ title, id }) => (
-              <Post key={id}>{title}</Post>
+              <PostListItem key={id} title={title} />
             ))}
-          </ul>
+          </PostList>
         ) : (
           <div>No results</div>
         )}

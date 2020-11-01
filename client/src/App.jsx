@@ -1,9 +1,11 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import CreatePost from "./posts/pages/create-post/Page";
 import PostList from "./posts/pages/list-post/Page.jsx";
+import WelcomePage from "./posts/pages/welcome/Page.jsx";
 import CreateComment from "./posts/pages/comments/create-comment/Page";
 
 import styled from "styled-components";
+import { LIGHT_FONT } from "./posts/constants/colors";
 
 const MainLayout = styled.div`
   margin: 0;
@@ -27,7 +29,7 @@ const ListMenu = styled.ul`
   & > li {
     background-color: #505050;
     list-style: none;
-    color: #fff;
+    color: ${LIGHT_FONT};
     text-transform: uppercase;
     font-size: 14px;
     border-radius: 4px;
@@ -53,11 +55,14 @@ const App = () => {
             <li>
               <a href="/posts">Posts</a>
             </li>
+            <li>
+              <a href="/posts/create">Create Post</a>
+            </li>
           </ListMenu>
         </NavMenu>
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" />
+            <Route exact path="/" component={WelcomePage} />
             <Route exact path="/posts" component={PostList} />
             <Route exact path="/posts/create" component={CreatePost} />
             <Route exact path="/posts/:id/comments" component={CreateComment} />
