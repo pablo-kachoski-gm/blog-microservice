@@ -15,7 +15,7 @@ import CommentsList from "./comments-list/List";
 
 const defaultTitle = "";
 const PostDetail = () => {
-  const [post, setPost] = useState({ comments: [] });
+  const [post, setPost] = useState({ title: "", comments: [] });
   const [comment, setComment] = useState(defaultTitle);
   const setLoading = useContext(LoadingContext);
   const { postId } = useParams();
@@ -81,7 +81,7 @@ const PostDetail = () => {
     <div>
       <h1>Post Detail</h1>
       <Form onSubmit={onSubmit}>
-        <h2>{`Title: ${post?.title}`}</h2>
+        <div>{`Title: ${post.title}`}</div>
         <Title>Add comments</Title>
         <TextInput onChange={onInputChange} value={comment} />
         <FormActions>
