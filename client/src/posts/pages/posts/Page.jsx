@@ -1,19 +1,22 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { SubmitButton } from "commons/components/Buttons";
-import createPostAPI from "posts/api/createPost";
+import createPostAPI from "posts/api/create-post";
+import deletePostAPI from "posts/api/delete-post";
 import PostsList from "./posts-list/List";
-import getPostsAPI from "posts/api/getPosts";
+import getPostsAPI from "posts/api/get-posts";
 import { Form } from "./StyledComponents";
 import { Title } from "./StyledComponents";
 import { FormActions } from "./StyledComponents";
 import { TextInput } from "commons/components/Inputs";
-import { LoadingContext } from "commons/context/loadingContext";
+import { LoadingContext } from "commons/context/loading-context";
+import { useHistory } from "react-router-dom";
 
 const defaultTitle = "";
 const PostsPage = () => {
   const [title, setTitle] = useState(defaultTitle);
   const [postList, setPostList] = useState([]);
   const setLoading = useContext(LoadingContext);
+  const history = useHistory();
 
   const fetchPostList = useCallback(async () => {
     try {
@@ -25,7 +28,7 @@ const PostsPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [setLoading, setPostList]);
+  }, [setLoading]);
 
   useEffect(() => {
     fetchPostList();
@@ -52,10 +55,30 @@ const PostsPage = () => {
     };
     createPost();
   };
+
+  const onDelete = (id) => {
+    const deletePost = async (postId) => {
+      try {
+        setLoading(true);
+        await deletePostAPI({ postId });
+        console.log(`Post ${postId} deleted successfully`);
+        await fetchPostList();
+      } catch (error) {
+        console.log("An error has ocurred.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    deletePost(id);
+  };
+  const onViewDetail = (id) => {
+    history.push(`/posts/${id}`);
+  };
+
   const disabledSubmit = title?.trim().length === 0;
   return (
     <div>
-      <h1>Posts</h1>
+      <h1>Create Post</h1>
       <Form onSubmit={onSubmit}>
         <Title>Title</Title>
         <TextInput onChange={onInputChange} value={title} />
@@ -63,7 +86,11 @@ const PostsPage = () => {
           <SubmitButton disabled={disabledSubmit}>Submit</SubmitButton>
         </FormActions>
       </Form>
-      <PostsList postList={postList} />
+      <PostsList
+        postList={postList}
+        onDelete={onDelete}
+        onViewDetail={onViewDetail}
+      />
     </div>
   );
 };

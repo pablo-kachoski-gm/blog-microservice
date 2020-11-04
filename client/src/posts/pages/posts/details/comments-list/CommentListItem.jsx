@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { Delete, Visibility } from "@styled-icons/material";
+import { Delete } from "@styled-icons/material";
 import { DARK_FONT, LIGHT_FONT } from "commons/constants/colors";
 
 const Post = styled.li`
-  background: linear-gradient(90deg, #6078ea 0%, #13b7aa 100%);
+  background: linear-gradient(90deg, #184e68 0%, #57ca85 100%);
   width: 300px;
   padding: 1em 1.2em;
   border-radius: 4px;
@@ -33,19 +33,15 @@ const Actions = styled.div`
 const DeleteIcon = styled(Delete)`
   color: ${LIGHT_FONT};
 `;
-const DetailIcon = styled(Visibility)`
-  color: ${LIGHT_FONT};
-`;
 
-const PostListItem = ({ title, onDelete, onViewDetail }) => {
+const PostListItem = ({ content, onDelete }) => {
   return (
     <Post>
       <ItemProp>
-        <span>Title: </span>
-        <span>{title}</span>
+        <span>Detail: </span>
+        <span>{content}</span>
       </ItemProp>
       <Actions>
-        <DetailIcon size="22" onClick={onViewDetail} />
         <DeleteIcon size="22" onClick={onDelete} />
       </Actions>
     </Post>

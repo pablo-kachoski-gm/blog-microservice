@@ -1,5 +1,5 @@
 export const DISABLED_COLOR = "#777";
-export const ACTION_BUTTON_PRIMARY = "#5a3fec"
+export const ACTION_BUTTON_PRIMARY = "#355a5a"
 export const NAV_BACKGROUND = '#6078ea'
 export const NAV_LI_BACKGROUND = '#9c9595'
 

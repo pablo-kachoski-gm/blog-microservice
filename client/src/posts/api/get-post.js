@@ -1,4 +1,6 @@
-const getPosts = async () => {
+import { API_BASE_URL } from "posts/constants/env";
+
+const getPost = async ({ postId }) => {
   const params = {
     method: "GET",
     credentials: "same-origin",
@@ -6,10 +8,10 @@ const getPosts = async () => {
       "Content-Type": "application/json",
     },
   };
-  const response = await fetch("http://localhost:4000/posts", params);
+  const response = await fetch(`${API_BASE_URL}/posts/${postId}`, params);
   if (!response.ok) {
     throw Error(response);
   }
   return await response.json();
 };
-export default getPosts;
+export default getPost;

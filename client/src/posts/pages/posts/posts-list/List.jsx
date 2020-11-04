@@ -14,14 +14,19 @@ const PostList = styled.ul`
   }
 `;
 
-const PostsList = ({ postList }) => {
+const PostsList = ({ postList, onDelete, onViewDetail }) => {
   return (
     <PostsWrapper>
-      <h2>List</h2>
+      <h2>Posts</h2>
       {postList.length > 0 ? (
         <PostList>
-          {postList.map(({ title, id }) => (
-            <PostListItem key={id} title={title} />
+          {postList?.map(({ title, id }) => (
+            <PostListItem
+              key={id}
+              title={title}
+              onDelete={() => onDelete(id)}
+              onViewDetail={() => onViewDetail(id)}
+            />
           ))}
         </PostList>
       ) : (

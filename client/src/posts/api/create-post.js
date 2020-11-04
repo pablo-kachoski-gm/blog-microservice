@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "posts/constants/env";
+
 const createPost = async ({ title }) => {
   const params = {
     method: "POST",
@@ -7,7 +9,7 @@ const createPost = async ({ title }) => {
     },
     body: JSON.stringify({ title }),
   };
-  const response = await fetch("http://localhost:4000/posts", params);
+  const response = await fetch(`${API_BASE_URL}/posts`, params);
   if (!response.ok) {
     throw Error(response);
   }

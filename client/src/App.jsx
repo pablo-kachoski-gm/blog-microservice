@@ -1,14 +1,13 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import PostPage from "./posts/pages/posts/Page";
 import WelcomePage from "./posts/pages/welcome/Page.jsx";
-import CreateComment from "./posts/pages/comments/create-comment/Page";
-
 import styled from "styled-components";
 import { PAGE_BACKGROUND } from "./posts/constants/colors";
 import { NAV_BACKGROUND, NAV_LI_BACKGROUND } from "commons/constants/colors";
 import { useState } from "react";
-import { LoadingContext } from "commons/context/loadingContext";
+import { LoadingContext } from "commons/context/loading-context";
 import LoadingScreen from "commons/components/loading/LoadingScreen";
+import PostDetail from "posts/pages/posts/details/Page";
 
 const MainLayout = styled.div`
   position: relative;
@@ -98,11 +97,7 @@ const App = () => {
               <Switch>
                 <Route exact path="/" component={WelcomePage} />
                 <Route exact path="/posts" component={PostPage} />
-                <Route
-                  exact
-                  path="/posts/:id/comments"
-                  component={CreateComment}
-                />
+                <Route exact path="/posts/:postId" component={PostDetail} />
               </Switch>
             </BrowserRouter>
           </Content>
