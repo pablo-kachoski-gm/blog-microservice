@@ -14,8 +14,21 @@ body {
 }
 * {
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #d99557 #da6800;
 }
-
+/* Works on Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  width: 20px;
+}
+*::-webkit-scrollbar-track {
+  background: #da6800;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #d99557;
+  border-radius: 20px;
+  border: solid #da6800;
+}
 a {
   color: inherit;
   text-decoration: inherit;

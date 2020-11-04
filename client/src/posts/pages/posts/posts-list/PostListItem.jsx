@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { Delete } from "@styled-icons/material";
+import { LIGHT_FONT } from "commons/constants/colors";
 
 const Post = styled.li`
-  background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+  background: linear-gradient(90deg, #6078ea 0%, #13b7aa 100%);
   width: 300px;
   padding: 1em 1.2em;
   border-radius: 4px;
@@ -30,7 +31,7 @@ const Actions = styled.div`
   }
 `;
 const WhiteDelete = styled(Delete)`
-  color: #d4d0d0;
+  color: ${LIGHT_FONT};
 `;
 
 const PostListItem = ({ title }) => {

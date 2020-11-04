@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DARK_FONT } from "posts/constants/colors";
+import { DARK_FONT } from "commons/constants/colors";
 
 const WelcomeWrapper = styled.div`
   color: ${DARK_FONT};

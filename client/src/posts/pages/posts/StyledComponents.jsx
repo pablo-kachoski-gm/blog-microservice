@@ -1,4 +1,4 @@
-import { LIGHT_FONT } from "posts/constants/colors";
+import { LIGHT_FONT } from "commons/constants/colors";
 import styled from "styled-components";
 
 export const FormActions = styled.div`
@@ -9,7 +9,7 @@ export const FormActions = styled.div`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+  background: linear-gradient(90deg, #6078ea 0%, #13b7aa 100%);
   border-radius: 4px;
   padding: 2em 1.5em;
   width: 300px;

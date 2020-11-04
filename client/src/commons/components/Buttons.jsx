@@ -14,6 +14,7 @@ export const SubmitButton = styled.button`
   margin: 4px 2px;
   border-radius: 5px;
   cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+  ${({ disabled }) => (disabled ? { opacity: 0.8 } : {})};
 
   &:hover {
     ${({ disabled }) =>
