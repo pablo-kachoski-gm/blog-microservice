@@ -5,7 +5,7 @@ export const SubmitButton = styled.button`
   padding: 0.5em 2em;
   background-color: ${({ disabled }) =>
     disabled ? DISABLED_COLOR : ACTION_BUTTON_PRIMARY};
-  color: white;
+  color: ${({ disabled }) => (disabled ? "#bdbdbd" : "white")};
   text-align: center;
   font-weight: bold;
   text-transform: uppercase;
@@ -16,9 +16,10 @@ export const SubmitButton = styled.button`
   cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
 
   &:hover {
-    background-color: ${({ disabled }) =>
-      disabled ? DISABLED_COLOR : ACTION_BUTTON_PRIMARY};
-    opacity: 0.5;
+    ${({ disabled }) =>
+      disabled
+        ? {}
+        : { "background-color": ACTION_BUTTON_PRIMARY, opacity: 0.5 }};
   }
   &:focus,
   & {

@@ -1,4 +1,6 @@
-export const PRINCIPAL = '#3c31a1'
-export const PAGE_BACKGROUND = '#e0dfdf'
+export const PRINCIPAL = '#43a0ff'
+export const PAGE_BACKGROUND = '#eaeaea'
+export const NAV_BACKGROUND = '#8a85b5'
+export const NAV_LI_BACKGROUND = '#d7675f'
 export const LIGHT_FONT = '#fff'
 export const DARK_FONT = '#000'

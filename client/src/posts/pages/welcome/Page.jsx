@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DARK_FONT, PAGE_BACKGROUND } from "../../constants/colors";
+import { DARK_FONT, PAGE_BACKGROUND } from "posts/constants/colors";
 
 const WelcomeWrapper = styled.div`
   background-color: ${PAGE_BACKGROUND};

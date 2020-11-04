@@ -1,33 +1,38 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import CreatePost from "./posts/pages/create-post/Page";
-import PostList from "./posts/pages/list-post/Page.jsx";
+import PostPage from "./posts/pages/posts/Page";
 import WelcomePage from "./posts/pages/welcome/Page.jsx";
 import CreateComment from "./posts/pages/comments/create-comment/Page";
 
 import styled from "styled-components";
-import { LIGHT_FONT } from "./posts/constants/colors";
+import {
+  LIGHT_FONT,
+  NAV_BACKGROUND,
+  NAV_LI_BACKGROUND,
+} from "./posts/constants/colors";
 
 const MainLayout = styled.div`
+  position: relative;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: 1fr 9fr;
+  grid-template-columns: 15fr 85fr;
   gap: 0px 0px;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
 `;
 const NavMenu = styled.nav`
-  background-color: #ccc;
+  background-color: ${NAV_BACKGROUND};
+  padding: 0 0.5em;
 `;
 const ListMenu = styled.ul`
-  margin: 0;
+  margin: 3em 0 0 0;
   padding: 0.5em;
   & > li:not(:last-child) {
     margin-bottom: 1em;
   }
 
   & > li {
-    background-color: #505050;
+    background-color: ${NAV_LI_BACKGROUND};
     list-style: none;
     color: ${LIGHT_FONT};
     text-transform: uppercase;
@@ -55,16 +60,12 @@ const App = () => {
             <li>
               <a href="/posts">Posts</a>
             </li>
-            <li>
-              <a href="/posts/create">Create Post</a>
-            </li>
           </ListMenu>
         </NavMenu>
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={WelcomePage} />
-            <Route exact path="/posts" component={PostList} />
-            <Route exact path="/posts/create" component={CreatePost} />
+            <Route exact path="/posts" component={PostPage} />
             <Route exact path="/posts/:id/comments" component={CreateComment} />
           </Switch>
         </BrowserRouter>
