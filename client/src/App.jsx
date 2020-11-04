@@ -5,11 +5,7 @@ import CreateComment from "./posts/pages/comments/create-comment/Page";
 
 import styled from "styled-components";
 import { PAGE_BACKGROUND } from "./posts/constants/colors";
-import {
-  LIGHT_FONT,
-  NAV_BACKGROUND,
-  NAV_LI_BACKGROUND,
-} from "commons/constants/colors";
+import { NAV_BACKGROUND, NAV_LI_BACKGROUND } from "commons/constants/colors";
 import { useState } from "react";
 import { LoadingContext } from "commons/context/loadingContext";
 import LoadingScreen from "commons/components/loading/LoadingScreen";
@@ -43,36 +39,13 @@ const ListMenu = styled.ul`
   & > li:not(:last-child) {
     margin-bottom: 1em;
   }
-
-  /* & > li {
-    background-color: ${NAV_LI_BACKGROUND};
-    list-style: none;
-    color: ${LIGHT_FONT};
-    text-transform: uppercase;
-    font-size: 14px;
-    border-radius: 4px;
-    &:hover {
-      background-color: rgba(63, 63, 63, 0.5);
-    }
-    & > a {
-      display: block;
-      padding: 1em 2em;
-    }
-  } */
 `;
 
 const ListMenuItem = styled.li`
-  /* background-color: ${NAV_LI_BACKGROUND};
-      list-style: none;
-      color: ${LIGHT_FONT};
-      text-transform: uppercase;
-      font-size: 14px;
-      border-radius: 4px; */
   background-color: ${NAV_LI_BACKGROUND};
 
   margin: 20px auto;
   border: none;
-  padding: 10px 44px;
   font-size: 22px;
   position: relative;
   color: white;
@@ -92,6 +65,8 @@ const ListMenuItem = styled.li`
   & > a {
     color: white;
     mix-blend-mode: luminosity;
+    display: flex;
+    padding: 10px 44px;
   }
   &:hover {
     &::before {
