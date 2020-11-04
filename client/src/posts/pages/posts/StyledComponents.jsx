@@ -1,10 +1,5 @@
-import { LIGHT_FONT, PAGE_BACKGROUND } from "posts/constants/colors";
+import { LIGHT_FONT } from "posts/constants/colors";
 import styled from "styled-components";
-
-export const PostsWrapper = styled.div`
-  background-color: ${PAGE_BACKGROUND};
-  padding: 2em;
-`;
 
 export const FormActions = styled.div`
   margin-top: auto;

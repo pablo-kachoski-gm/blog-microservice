@@ -8,7 +8,11 @@ import {
   LIGHT_FONT,
   NAV_BACKGROUND,
   NAV_LI_BACKGROUND,
+  PAGE_BACKGROUND,
 } from "./posts/constants/colors";
+import { useState } from "react";
+import { LoadingContext } from "commons/context/loadingContext";
+import LoadingScreen from "commons/components/loading/LoadingScreen";
 
 const MainLayout = styled.div`
   position: relative;
@@ -17,8 +21,17 @@ const MainLayout = styled.div`
   display: grid;
   grid-template-columns: 15fr 85fr;
   gap: 0px 0px;
-  min-height: 100vh;
+  height: 100vh;
   width: 100vw;
+  overflow: hidden;
+`;
+const Content = styled.div`
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: ${PAGE_BACKGROUND};
+  padding: 2em;
+  min-height: 100vh;
+  width: 100%;
 `;
 const NavMenu = styled.nav`
   background-color: ${NAV_BACKGROUND};
@@ -49,26 +62,36 @@ const ListMenu = styled.ul`
 `;
 
 const App = () => {
+  const [loading, setLoading] = useState(false);
   return (
     <>
       <MainLayout>
-        <NavMenu>
-          <ListMenu>
-            <li>
-              <a href="/">Inicio</a>
-            </li>
-            <li>
-              <a href="/posts">Posts</a>
-            </li>
-          </ListMenu>
-        </NavMenu>
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/" component={WelcomePage} />
-            <Route exact path="/posts" component={PostPage} />
-            <Route exact path="/posts/:id/comments" component={CreateComment} />
-          </Switch>
-        </BrowserRouter>
+        <LoadingContext.Provider value={setLoading}>
+          <NavMenu>
+            <ListMenu>
+              <li>
+                <a href="/">Inicio</a>
+              </li>
+              <li>
+                <a href="/posts">Posts</a>
+              </li>
+            </ListMenu>
+          </NavMenu>
+          {loading && <LoadingScreen />}
+          <Content>
+            <BrowserRouter>
+              <Switch>
+                <Route exact path="/" component={WelcomePage} />
+                <Route exact path="/posts" component={PostPage} />
+                <Route
+                  exact
+                  path="/posts/:id/comments"
+                  component={CreateComment}
+                />
+              </Switch>
+            </BrowserRouter>
+          </Content>
+        </LoadingContext.Provider>
       </MainLayout>
     </>
   );

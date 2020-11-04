@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import { DARK_FONT, PAGE_BACKGROUND } from "posts/constants/colors";
+import { DARK_FONT } from "posts/constants/colors";
 
 const WelcomeWrapper = styled.div`
-  background-color: ${PAGE_BACKGROUND};
   color: ${DARK_FONT};
   width: 100%;
-  padding: 1em 2em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,11 +12,9 @@ const WelcomeWrapper = styled.div`
 
 const CreatePost = () => {
   return (
-    <>
-      <WelcomeWrapper>
-        <h1>Welcome!!</h1>
-      </WelcomeWrapper>
-    </>
+    <WelcomeWrapper>
+      <h1>Welcome!!</h1>
+    </WelcomeWrapper>
   );
 };
 export default CreatePost;

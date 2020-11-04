@@ -1,20 +1,19 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { SubmitButton } from "commons/components/Buttons";
-import LoadingScreen from "commons/components/loading/LoadingScreen";
 import createPostAPI from "posts/api/createPost";
 import PostsList from "./posts-list/List";
 import getPostsAPI from "posts/api/getPosts";
-import { PostsWrapper } from "./StyledComponents";
 import { Form } from "./StyledComponents";
 import { Title } from "./StyledComponents";
 import { FormActions } from "./StyledComponents";
 import { TextInput } from "commons/components/Inputs";
+import { LoadingContext } from "commons/context/loadingContext";
 
 const defaultTitle = "";
 const PostsPage = () => {
   const [title, setTitle] = useState(defaultTitle);
   const [postList, setPostList] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const setLoading = useContext(LoadingContext);
 
   const fetchPostList = useCallback(async () => {
     try {
@@ -55,20 +54,17 @@ const PostsPage = () => {
   };
   const disabledSubmit = title?.trim().length === 0;
   return (
-    <>
-      {loading && <LoadingScreen />}
-      <PostsWrapper>
-        <h1>Posts</h1>
-        <Form onSubmit={onSubmit}>
-          <Title>Title</Title>
-          <TextInput onChange={onInputChange} value={title} />
-          <FormActions>
-            <SubmitButton disabled={disabledSubmit}>Submit</SubmitButton>
-          </FormActions>
-        </Form>
-        <PostsList postList={postList} />
-      </PostsWrapper>
-    </>
+    <div>
+      <h1>Posts</h1>
+      <Form onSubmit={onSubmit}>
+        <Title>Title</Title>
+        <TextInput onChange={onInputChange} value={title} />
+        <FormActions>
+          <SubmitButton disabled={disabledSubmit}>Submit</SubmitButton>
+        </FormActions>
+      </Form>
+      <PostsList postList={postList} />
+    </div>
   );
 };
 export default PostsPage;
