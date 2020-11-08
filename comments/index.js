@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require('body-parser')
 const { randomBytes } = require('crypto')
 const cors = require('cors')
+const fetch = require('node-fetch');
 
 const app = express();
 app.use(bodyParser.json())
@@ -12,15 +13,10 @@ const commentsByPostId = {}
 app.get("/posts/:postId/comments", (req, res) => {
     const postId = req.params.postId
     const comments = commentsByPostId[postId] || []
-    //TODO REMOVE - ONLY FOR TESTING LOADING PURPOSE
-    const wait = async () => {
-        await setTimeout(() => res.status(200).json({ list: comments }), 500)
-    }
-    wait();
-    //res.json({ list: Object.values(comments) })
+    res.status(200).json({ list: comments })
 });
 
-app.post("/posts/:postId/comments", (req, res) => {
+app.post("/posts/:postId/comments", async (req, res) => {
     const postId = req.params.postId
     const { content } = req.body
     const comments = commentsByPostId[req.params.postId] || []
@@ -28,6 +24,15 @@ app.post("/posts/:postId/comments", (req, res) => {
     const newComment = { id: commentId, content }
     comments.push(newComment)
     commentsByPostId[postId] = comments
+
+    const params = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ type: 'CommentCreated', data: { ...newComment, postId } }),
+    };
+    await fetch('http://localhost:4005/events', params)
     res.status(201).send(newComment)
 });
 
@@ -39,7 +44,10 @@ app.delete("/posts/:postId/comments/:commentId", (req, res) => {
     commentsByPostId[postId] = comments
     res.status(204).send()
 });
-
+app.post('/events', (req, res) => {
+    console.log('Received Event', req.body.type)
+    res.status(200).send()
+})
 app.listen(4001, () => {
     console.log('Listening on port: 4001')
 })

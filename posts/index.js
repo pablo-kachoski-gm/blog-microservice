@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require('body-parser')
 const { randomBytes } = require('crypto')
 const cors = require('cors')
+const fetch = require('node-fetch');
+
 const app = express();
 app.use(bodyParser.json())
 app.use(cors())
@@ -12,44 +14,36 @@ const waitForMillisec = 300
 app.get("/posts/:postId", (req, res) => {
     const id = req.params.postId
     const foundPost = posts[id]
-    //TODO REMOVE - ONLY FOR TESTING LOADING PURPOSE
-    const wait = async () => {
-        await setTimeout(() => res.status(200).json({ ...foundPost }), waitForMillisec)
-    }
-    wait();
-    //res.json({ ...foundPost })
+    res.status(200).json({ ...foundPost })
 });
 app.get("/posts", (_, res) => {
-    //TODO REMOVE - ONLY FOR TESTING LOADING PURPOSE
-    const wait = async () => {
-        await setTimeout(() => res.status(200).json({ list: Object.values(posts) }), waitForMillisec)
-    }
-    wait();
-    //res.json({ list: Object.values(posts) })
+    res.status(200).json({ list: Object.values(posts) })
 });
 
 app.delete("/posts/:postId", (req, res) => {
     const id = req.params.postId
     delete posts[id]
-    //TODO REMOVE - ONLY FOR TESTING LOADING PURPOSE
-    const wait = async () => {
-        await setTimeout(() => res.status(204).send(), waitForMillisec)
-    }
-    wait();
-    //res.status(204).send()
+    res.status(204).send()
 });
-app.post("/posts", (req, res) => {
+app.post("/posts", async (req, res) => {
     const id = randomBytes(4).toString('hex')
     const { title } = req.body
     posts[id] = { id, title }
-    //TODO REMOVE - ONLY FOR TESTING LOADING PURPOSE
-    const wait = async () => {
-        await setTimeout(() => res.status(201).send(posts[id]), waitForMillisec)
-    }
-    wait();
-    //res.status(201).send(posts[id])
-});
 
+    const params = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ type: 'PostCreated', data: { id, title } }),
+    };
+    await fetch('http://localhost:4005/events', params)
+    res.status(201).send(posts[id])
+});
+app.post('/events', (req, res) => {
+    console.log('Received Event', req.body.type)
+    res.status(200).send()
+})
 app.listen(4000, () => {
     console.log('Listening on port: 4000')
 })

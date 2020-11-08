@@ -45,7 +45,6 @@ const PostsPage = () => {
         setLoading(true);
         await createPostAPI({ title });
         clearFormData();
-        console.log(`Post ${title} created successfully`);
         await fetchPostList();
       } catch (error) {
         console.log("An error has ocurred.");
@@ -61,7 +60,6 @@ const PostsPage = () => {
       try {
         setLoading(true);
         await deletePostAPI({ postId });
-        console.log(`Post ${postId} deleted successfully`);
         await fetchPostList();
       } catch (error) {
         console.log("An error has ocurred.");

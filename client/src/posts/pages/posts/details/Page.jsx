@@ -7,9 +7,8 @@ import { FormActions } from "./StyledComponents";
 import { TextInput } from "commons/components/Inputs";
 import { LoadingContext } from "commons/context/loading-context";
 import { useHistory, useParams } from "react-router-dom";
-import getPostAPI from "posts/api/get-post";
+import getPostAPI from "query-service/api/get-post";
 import createCommentAPI from "comments/api/create-comment";
-import getCommentsAPI from "comments/api/get-comments";
 import deleteCommentAPI from "comments/api/delete-comment";
 import CommentsList from "./comments-list/List";
 
@@ -24,9 +23,11 @@ const PostDetail = () => {
   const fetchPost = useCallback(async () => {
     try {
       setLoading(true);
-      const postResponse = await getPostAPI({ postId });
-      const commentsResponse = await getCommentsAPI({ postId });
-      setPost({ ...postResponse, comments: commentsResponse.list });
+      // Instead of doing separates fetches now consumes query API
+      // const postResponse = await getPostAPI({ postId });
+      // const commentsResponse = await getCommentsAPI({ postId });
+      const postWithCommentsResponse = await getPostAPI({ postId });
+      setPost(postWithCommentsResponse);
     } catch (error) {
       console.log("An error has ocurred.");
       history.push("/posts");
