@@ -1,5 +1,5 @@
+import fetch from "node-fetch";
 import { API_BASE_URL } from "events/constants/env";
-const fetch = require("node-fetch");
 
 const createEvent = async ({ body }) => {
   const params = {

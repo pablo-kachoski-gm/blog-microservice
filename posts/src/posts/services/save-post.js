@@ -4,8 +4,9 @@ import createEventAPI from "events/api/create-event";
 
 const savePost = async ({ title }) => {
   const id = randomBytes(4).toString("hex");
-  data[id] = { id, title };
-  const body = { type: "PostCreated", data: { id, title } };
+  const newPost = { id, title };
+  data[id] = newPost;
+  const body = { type: "PostCreated", data: newPost };
   await createEventAPI({ body });
   return newPost;
 };
