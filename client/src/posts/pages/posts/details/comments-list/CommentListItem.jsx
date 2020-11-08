@@ -4,7 +4,7 @@ import { DARK_FONT, LIGHT_FONT } from "commons/constants/colors";
 
 const getBackground = (status) => {
   const backgroundByStatus = {
-    Approved: "linear-gradient(90deg, #184e68 0%, #57ca85 100%)",
+    Approved: "linear-gradient(90deg, #53bcef 0%, #57ca85 100%)",
     Rejected: "linear-gradient(90deg, #c33333 0%, #ca8c57 100%)",
     Pending: "linear-gradient(90deg, #9ea71c 0%, #ca8c57 100%)",
   };

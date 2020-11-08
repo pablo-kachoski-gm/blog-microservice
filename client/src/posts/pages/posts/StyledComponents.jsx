@@ -9,7 +9,7 @@ export const FormActions = styled.div`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  background: linear-gradient(90deg, #6078ea 0%, #13b7aa 100%);
+  background: linear-gradient(90deg, #53bcef 0%, #13b7aa 100%);
   border-radius: 4px;
   padding: 2em 1.5em 1em 1.5em;
   width: 300px;

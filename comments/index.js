@@ -1,11 +1,10 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import updateComment from "comments/services/update-comment";
 import deleteComment from "comments/services/delete-comment";
 import saveComment from "comments/services/save-comment";
 import getComments from "comments/services/get-comments";
-import deletePostComments from "comments/services/delete-post-comments";
+import eventHandler from "events/services/event-handler";
 
 const app = express();
 app.use(bodyParser.json());
@@ -49,14 +48,7 @@ app.delete("/posts/:postId/comments/:commentId", (req, res) => {
 app.post("/events", async (req, res) => {
   try {
     const { type, data } = req.body;
-    if (type === "CommentModerated") {
-      const { postId, id, status } = data;
-      updateComment({ id, postId, status });
-    }
-    if (type === "PostDeleted") {
-      const { id } = data;
-      deletePostComments({ id });
-    }
+    eventHandler({ type, data });
     res.status(200).send();
   } catch (error) {
     res.status(500).send({

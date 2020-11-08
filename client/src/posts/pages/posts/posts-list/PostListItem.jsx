@@ -3,7 +3,7 @@ import { Delete, Visibility } from "@styled-icons/material";
 import { DARK_FONT, LIGHT_FONT } from "commons/constants/colors";
 
 const Post = styled.li`
-  background: linear-gradient(90deg, #6078ea 0%, #13b7aa 100%);
+  background: linear-gradient(90deg, #53bcef 0%, #13b7aa 100%);
   width: 300px;
   padding: 1em 1.2em;
   border-radius: 4px;
