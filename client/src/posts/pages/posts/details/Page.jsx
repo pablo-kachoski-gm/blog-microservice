@@ -1,6 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { SubmitButton } from "commons/components/Buttons";
-
 import { Form } from "./StyledComponents";
 import { Title } from "./StyledComponents";
 import { FormActions } from "./StyledComponents";
@@ -11,6 +10,8 @@ import getPostAPI from "query-service/api/get-post";
 import createCommentAPI from "comments/api/create-comment";
 import deleteCommentAPI from "comments/api/delete-comment";
 import CommentsList from "./comments-list/List";
+import { FETCH_POSTS_MILLISEC_DELAY } from "posts/constants/time";
+import { delay } from "commons/utils/time";
 
 const defaultTitle = "";
 const PostDetail = () => {
@@ -46,6 +47,7 @@ const PostDetail = () => {
       try {
         setLoading(true);
         await createCommentAPI({ postId, content: comment });
+        await delay(FETCH_POSTS_MILLISEC_DELAY);
         await fetchPost();
         clearFormData();
       } catch (error) {
@@ -64,6 +66,7 @@ const PostDetail = () => {
       try {
         setLoading(true);
         await deleteCommentAPI({ postId, commentId });
+        await delay(FETCH_POSTS_MILLISEC_DELAY);
         await fetchPost();
       } catch (error) {
         console.log("An error has ocurred.");
