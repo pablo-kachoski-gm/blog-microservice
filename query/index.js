@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import eventHandler from "events/services/eventHandler";
+import eventHandler from "events/services/event-handler";
 import getPost from "query/services/get-post";
 import getPosts from "query/services/get-posts";
 
