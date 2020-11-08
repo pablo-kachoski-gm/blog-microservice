@@ -2,7 +2,7 @@ import updateComment from "comments/services/update-comment";
 import deletePostComments from "comments/services/delete-post-comments";
 import EventTypes from "events/constants/event-types";
 
-const eventHandler = ({ type, data }) => {
+const handleEvents = ({ type, data }) => {
   const Actions = {
     [EventTypes.COMMENT_MODERATED]: ({ postId, id, status }) =>
       updateComment({ postId, id, status }),
@@ -10,4 +10,4 @@ const eventHandler = ({ type, data }) => {
   };
   Actions[type] && Actions[type](data);
 };
-export default eventHandler;
+export default handleEvents;

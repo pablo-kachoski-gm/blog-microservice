@@ -1,9 +1,10 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import eventHandler from "events/services/event-handler";
+import handleEvents from "events/services/handle-events";
 import getPost from "query/services/get-post";
 import getPosts from "query/services/get-posts";
+import initializeQuery from "query/services/initialize-query";
 
 const app = express();
 app.use(bodyParser.json());
@@ -33,7 +34,7 @@ app.get("/posts/:postId", (req, res) => {
 app.post("/events", (req, res) => {
   try {
     const { type, data } = req.body;
-    eventHandler({ type, data });
+    handleEvents({ type, data });
     res.status(200).send();
   } catch (error) {
     res.status(500).send({
@@ -43,5 +44,10 @@ app.post("/events", (req, res) => {
 });
 
 app.listen(4002, () => {
+  try {
+    initializeQuery();
+  } catch (error) {
+    console.log("Error loading events.", error);
+  }
   console.log("Listening on 4002");
 });

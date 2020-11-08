@@ -4,7 +4,7 @@ import cors from "cors";
 import deleteComment from "comments/services/delete-comment";
 import saveComment from "comments/services/save-comment";
 import getComments from "comments/services/get-comments";
-import eventHandler from "events/services/event-handler";
+import handleEvents from "events/services/handle-events";
 
 const app = express();
 app.use(bodyParser.json());
@@ -48,7 +48,7 @@ app.delete("/posts/:postId/comments/:commentId", (req, res) => {
 app.post("/events", async (req, res) => {
   try {
     const { type, data } = req.body;
-    eventHandler({ type, data });
+    handleEvents({ type, data });
     res.status(200).send();
   } catch (error) {
     res.status(500).send({

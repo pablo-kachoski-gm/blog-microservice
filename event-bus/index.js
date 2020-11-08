@@ -1,12 +1,16 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const fetch = require("node-fetch");
+import express from "express";
+import bodyParser from "body-parser";
+import fetch from "node-fetch";
+import saveEvent from "events/services/save-event";
+import getEvents from "events/services/get-events";
 
 const app = express();
 app.use(bodyParser.json());
 
 app.post("/events", async (req, res) => {
   const event = req.body;
+  saveEvent({ event });
+
   const params = {
     method: "POST",
     headers: {
@@ -34,8 +38,12 @@ app.post("/events", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-
   res.status(200).send();
+});
+
+app.get("/events", async (_, res) => {
+  const events = getEvents();
+  res.status(200).json({ list: events });
 });
 
 app.listen(4005, () => {
