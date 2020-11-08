@@ -46,7 +46,6 @@ const PostDetail = () => {
       try {
         setLoading(true);
         await createCommentAPI({ postId, content: comment });
-        console.log(`Comment ${comment} created successfully`);
         await fetchPost();
         clearFormData();
       } catch (error) {
@@ -65,7 +64,6 @@ const PostDetail = () => {
       try {
         setLoading(true);
         await deleteCommentAPI({ postId, commentId });
-        console.log(`Comment ${commentId} deleted successfully`);
         await fetchPost();
       } catch (error) {
         console.log("An error has ocurred.");

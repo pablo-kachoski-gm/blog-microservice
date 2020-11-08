@@ -20,11 +20,11 @@ const CommentsList = ({ commentsList, onDelete }) => {
       <h2>Comments</h2>
       {commentsList?.length > 0 ? (
         <CommentList>
-          {commentsList.map(({ content, id }) => (
+          {commentsList.map((comment) => (
             <CommentListItem
-              key={id}
-              content={content}
-              onDelete={() => onDelete(id)}
+              key={comment.id}
+              comment={comment}
+              onDelete={() => onDelete(comment.id)}
             />
           ))}
         </CommentList>

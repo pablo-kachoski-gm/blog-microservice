@@ -8,7 +8,10 @@ const getComments = async ({ postId }) => {
       "Content-Type": "application/json",
     },
   };
-  const response = await fetch(`${API_BASE_URL}/posts/${postId}/comments`, params);
+  const response = await fetch(
+    `${API_BASE_URL}/posts/${postId}/comments`,
+    params
+  );
   if (!response.ok) {
     throw Error(response);
   }

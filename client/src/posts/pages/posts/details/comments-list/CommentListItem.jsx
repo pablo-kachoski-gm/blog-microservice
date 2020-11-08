@@ -2,9 +2,18 @@ import styled from "styled-components";
 import { Delete } from "@styled-icons/material";
 import { DARK_FONT, LIGHT_FONT } from "commons/constants/colors";
 
+const getBackground = (status) => {
+  const backgroundByStatus = {
+    Approved: "linear-gradient(90deg, #184e68 0%, #57ca85 100%)",
+    Rejected: "linear-gradient(90deg, #c33333 0%, #ca8c57 100%)",
+    Pending: "linear-gradient(90deg, #9ea71c 0%, #ca8c57 100%)",
+  };
+  return backgroundByStatus[status] || "#CCC";
+};
+
 const Post = styled.li`
-  background: linear-gradient(90deg, #184e68 0%, #57ca85 100%);
-  width: 300px;
+  background: ${({ status }) => getBackground(status)};
+  width: 400px;
   padding: 1em 1.2em;
   border-radius: 4px;
   list-style: none;
@@ -20,6 +29,7 @@ const ItemProp = styled.div`
     margin-right: 1em;
   }
 `;
+
 const Actions = styled.div`
   display: flex;
   align-items: center;
@@ -34,13 +44,37 @@ const DeleteIcon = styled(Delete)`
   color: ${LIGHT_FONT};
 `;
 
-const PostListItem = ({ content, onDelete }) => {
-  return (
-    <Post>
+const getCommentContent = ({ content, status }) => {
+  const CommentByStatus = {
+    Approved: (
       <ItemProp>
-        <span>Detail: </span>
         <span>{content}</span>
       </ItemProp>
+    ),
+    Rejected: (
+      <ItemProp>
+        <span>This comment has been rejected</span>
+      </ItemProp>
+    ),
+    Pending: (
+      <ItemProp>
+        <span>This comment is awaiting moderation</span>
+      </ItemProp>
+    ),
+  };
+  return (
+    CommentByStatus[status] || (
+      <ItemProp>
+        <span>Invalid </span>
+      </ItemProp>
+    )
+  );
+};
+const PostListItem = ({ comment, onDelete }) => {
+  const { content, status } = comment;
+  return (
+    <Post status={status}>
+      {getCommentContent({ content, status })}
       <Actions>
         <DeleteIcon size="22" onClick={onDelete} />
       </Actions>
