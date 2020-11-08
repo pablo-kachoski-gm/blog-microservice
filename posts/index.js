@@ -1,42 +1,58 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const { randomBytes } = require("crypto");
-const cors = require("cors");
-const fetch = require("node-fetch");
+import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
+import deletePost from "posts/services/delete-post";
+import savePost from "posts/services/save-post";
+import getPosts from "posts/services/get-posts";
+import getPost from "posts/services/get-post";
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
-const posts = {};
 
 app.get("/posts/:postId", (req, res) => {
-  const id = req.params.postId;
-  const foundPost = posts[id];
-  res.status(200).json({ ...foundPost });
+  try {
+    const id = req.params.postId;
+    const post = getPost({ id });
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).send({
+      error: "An unexpected error ocurred. Please contact the administrator",
+    });
+  }
 });
 app.get("/posts", (_, res) => {
-  res.status(200).json({ list: Object.values(posts) });
+  try {
+    const posts = getPosts();
+    res.status(200).json({ list: posts });
+  } catch (error) {
+    res.status(500).send({
+      error: "An unexpected error ocurred. Please contact the administrator",
+    });
+  }
 });
 
 app.delete("/posts/:postId", (req, res) => {
-  const id = req.params.postId;
-  delete posts[id];
-  res.status(204).send();
+  try {
+    const id = req.params.postId;
+    deletePost({ id });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).send({
+      error: "An unexpected error ocurred. Please contact the administrator",
+    });
+  }
 });
 app.post("/posts", async (req, res) => {
-  const id = randomBytes(4).toString("hex");
-  const { title } = req.body;
-  posts[id] = { id, title };
-
-  const params = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ type: "PostCreated", data: { id, title } }),
-  };
-  await fetch("http://localhost:4005/events", params);
-  res.status(201).send(posts[id]);
+  try {
+    const { title } = req.body;
+    const newPost = savePost({ title });
+    res.status(201).send(newPost);
+  } catch (error) {
+    res.status(500).send({
+      error: "An unexpected error ocurred. Please contact the administrator",
+    });
+  }
 });
 app.post("/events", (req, res) => {
   console.log("Received Event", req.body.type);
