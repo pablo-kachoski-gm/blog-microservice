@@ -1,10 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import updateComment from "./src/comments/services/update-comment";
-import deleteComment from "./src/comments/services/delete-comment";
-import saveComment from "./src/comments/services/save-comment";
-import getComments from "./src/comments/services/get-comments";
+import updateComment from "comments/services/update-comment";
+import deleteComment from "comments/services/delete-comment";
+import saveComment from "comments/services/save-comment";
+import getComments from "comments/services/get-comments";
+import deletePostComments from "comments/services/delete-post-comments";
 
 const app = express();
 app.use(bodyParser.json());
@@ -51,6 +52,10 @@ app.post("/events", async (req, res) => {
     if (type === "CommentModerated") {
       const { postId, id, status } = data;
       updateComment({ id, postId, status });
+    }
+    if (type === "PostDeleted") {
+      const { id } = data;
+      deletePostComments({ id });
     }
     res.status(200).send();
   } catch (error) {

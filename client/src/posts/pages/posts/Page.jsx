@@ -3,13 +3,15 @@ import { SubmitButton } from "commons/components/Buttons";
 import createPostAPI from "posts/api/create-post";
 import deletePostAPI from "posts/api/delete-post";
 import PostsList from "./posts-list/List";
-import getPostsAPI from "posts/api/get-posts";
+import getPostsAPI from "query-service/api/get-posts";
 import { Form } from "./StyledComponents";
 import { Title } from "./StyledComponents";
 import { FormActions } from "./StyledComponents";
 import { TextInput } from "commons/components/Inputs";
 import { LoadingContext } from "commons/context/loading-context";
 import { useHistory } from "react-router-dom";
+import { delay } from "commons/utils/time";
+import { FETCH_POSTS_MILLISEC_DELAY } from "posts/constants/time";
 
 const defaultTitle = "";
 const PostsPage = () => {
@@ -45,6 +47,7 @@ const PostsPage = () => {
         setLoading(true);
         await createPostAPI({ title });
         clearFormData();
+        await delay(FETCH_POSTS_MILLISEC_DELAY);
         await fetchPostList();
       } catch (error) {
         console.log("An error has ocurred.");
@@ -60,6 +63,7 @@ const PostsPage = () => {
       try {
         setLoading(true);
         await deletePostAPI({ postId });
+        await delay(FETCH_POSTS_MILLISEC_DELAY);
         await fetchPostList();
       } catch (error) {
         console.log("An error has ocurred.");
