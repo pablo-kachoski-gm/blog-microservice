@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SubmitButton } from "commons/components/Buttons";
 import createPostAPI from "posts/api/create-post";
 import deletePostAPI from "posts/api/delete-post";
@@ -8,16 +8,14 @@ import { Form } from "./StyledComponents";
 import { Title } from "./StyledComponents";
 import { FormActions } from "./StyledComponents";
 import { TextInput } from "commons/components/Inputs";
-import { LoadingContext } from "commons/context/loading-context";
 import { useHistory } from "react-router-dom";
 import { delay } from "commons/utils/time";
 import { FETCH_POSTS_MILLISEC_DELAY } from "posts/constants/time";
 
 const defaultTitle = "";
-const PostsPage = () => {
+const PostsPage = ({ setLoading }) => {
   const [title, setTitle] = useState(defaultTitle);
   const [postList, setPostList] = useState([]);
-  const setLoading = useContext(LoadingContext);
   const history = useHistory();
 
   const fetchPostList = useCallback(async () => {

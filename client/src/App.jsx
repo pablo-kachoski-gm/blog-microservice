@@ -4,7 +4,6 @@ import WelcomePage from "./posts/pages/welcome/Page.jsx";
 import styled from "styled-components";
 import { PAGE_BACKGROUND } from "./posts/constants/colors";
 import { useState } from "react";
-import { LoadingContext } from "commons/context/loading-context";
 import LoadingScreen from "commons/components/loading/LoadingScreen";
 import PostDetail from "posts/pages/posts/details/Page";
 import { NavMenu } from "commons/components/nav-menu/StyledComponents";
@@ -34,30 +33,33 @@ const Content = styled.div`
 
 const App = () => {
   const [loading, setLoading] = useState(false);
+  const props = { loading, setLoading };
   return (
     <MainLayout>
-      <LoadingContext.Provider value={setLoading}>
-        <NavMenu>
-          <ListMenu>
-            <ListMenuItem>
-              <a href="/">Inicio</a>
-            </ListMenuItem>
-            <ListMenuItem>
-              <a href="/posts">Posts</a>
-            </ListMenuItem>
-          </ListMenu>
-        </NavMenu>
-        {loading && <LoadingScreen />}
-        <Content>
-          <BrowserRouter>
-            <Switch>
-              <Route exact path="/" component={WelcomePage} />
-              <Route exact path="/posts" component={PostPage} />
-              <Route exact path="/posts/:postId" component={PostDetail} />
-            </Switch>
-          </BrowserRouter>
-        </Content>
-      </LoadingContext.Provider>
+      <NavMenu>
+        <ListMenu>
+          <ListMenuItem>
+            <a href="/">Inicio</a>
+          </ListMenuItem>
+          <ListMenuItem>
+            <a href="/posts">Posts</a>
+          </ListMenuItem>
+        </ListMenu>
+      </NavMenu>
+      {loading && <LoadingScreen />}
+      <Content>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" render={() => <WelcomePage {...props} />} />
+            <Route exact path="/posts" render={() => <PostPage {...props} />} />
+            <Route
+              exact
+              path="/posts/:postId"
+              render={() => <PostDetail {...props} />}
+            />
+          </Switch>
+        </BrowserRouter>
+      </Content>
     </MainLayout>
   );
 };

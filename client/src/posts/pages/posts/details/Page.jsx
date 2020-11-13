@@ -1,10 +1,9 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SubmitButton } from "commons/components/Buttons";
 import { Form } from "./StyledComponents";
 import { Title } from "./StyledComponents";
 import { FormActions } from "./StyledComponents";
 import { TextInput } from "commons/components/Inputs";
-import { LoadingContext } from "commons/context/loading-context";
 import { useHistory, useParams } from "react-router-dom";
 import getPostAPI from "query-service/api/get-post";
 import createCommentAPI from "comments/api/create-comment";
@@ -14,10 +13,9 @@ import { FETCH_POSTS_MILLISEC_DELAY } from "posts/constants/time";
 import { delay } from "commons/utils/time";
 
 const defaultTitle = "";
-const PostDetail = () => {
+const PostDetail = ({ setLoading }) => {
   const [post, setPost] = useState({ title: "", comments: [] });
   const [comment, setComment] = useState(defaultTitle);
-  const setLoading = useContext(LoadingContext);
   const { postId } = useParams();
   const history = useHistory();
 
