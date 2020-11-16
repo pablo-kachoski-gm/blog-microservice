@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/posts/:postId/comments", (_, res) => {
+app.get("/api/posts/:postId/comments", (_, res) => {
   try {
     const comments = getComments();
     res.status(200).json({ list: comments });
@@ -21,7 +21,7 @@ app.get("/posts/:postId/comments", (_, res) => {
   }
 });
 
-app.post("/posts/:postId/comments", (req, res) => {
+app.post("/api/posts/:postId/comments/create", (req, res) => {
   try {
     const postId = req.params.postId;
     const { content } = req.body;
@@ -34,7 +34,7 @@ app.post("/posts/:postId/comments", (req, res) => {
   }
 });
 
-app.delete("/posts/:postId/comments/:commentId", (req, res) => {
+app.delete("/api/posts/:postId/comments/:commentId", (req, res) => {
   try {
     const { postId, commentId } = req.params;
     deleteComment({ postId, commentId });
@@ -45,7 +45,7 @@ app.delete("/posts/:postId/comments/:commentId", (req, res) => {
     });
   }
 });
-app.post("/events", async (req, res) => {
+app.post("/api/events", async (req, res) => {
   try {
     const { type, data } = req.body;
     handleEvents({ type, data });

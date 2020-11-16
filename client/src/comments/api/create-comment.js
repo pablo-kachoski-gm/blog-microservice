@@ -10,7 +10,7 @@ const createComment = async ({ postId, content }) => {
     body: JSON.stringify({ content }),
   };
   const response = await fetch(
-    `${API_BASE_URL}/posts/${postId}/comments`,
+    `${API_BASE_URL}/posts/${postId}/comments/create`,
     params
   );
   if (!response.ok) {

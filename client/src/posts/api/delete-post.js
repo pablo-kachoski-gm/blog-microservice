@@ -8,7 +8,10 @@ const deletePost = async ({ postId }) => {
       "Content-Type": "application/json",
     },
   };
-  const response = await fetch(`${API_BASE_URL}/posts/${postId}`, params);
+  const response = await fetch(
+    `${API_BASE_URL}/posts/${postId}/delete`,
+    params
+  );
   if (!response.ok) {
     throw Error(response);
   }

@@ -5,7 +5,7 @@ import deletePost from "query/services/delete-post";
 import deletePostComment from "query/services/delete-post-comment";
 import EventTypes from "events/constants/event-types";
 
-const handleEvents = ({ type, data }) => {
+const handleEvents = async ({ type, data }) => {
   const Actions = {
     [EventTypes.POST_CREATED]: ({ id, title }) => createPost({ id, title }),
     [EventTypes.COMMENT_CREATED]: ({ id, content, postId, status }) =>
@@ -17,6 +17,6 @@ const handleEvents = ({ type, data }) => {
     [EventTypes.COMMENT_DELETED]: ({ id, postId }) =>
       deletePostComment({ id, postId }),
   };
-  Actions[type] && Actions[type](data);
+  Actions[type] && (await Actions[type](data));
 };
 export default handleEvents;

@@ -9,7 +9,7 @@ const createPost = async ({ title }) => {
     },
     body: JSON.stringify({ title }),
   };
-  const response = await fetch(`${API_BASE_URL}/posts`, params);
+  const response = await fetch(`${API_BASE_URL}/posts/create`, params);
   if (!response.ok) {
     throw Error(response);
   }

@@ -5,7 +5,7 @@ import commentModeration from "moderation/services/comment-moderation";
 const app = express();
 app.use(bodyParser.json());
 
-app.post("/events", async (req, res) => {
+app.post("/api/events", async (req, res) => {
   try {
     const {
       type,

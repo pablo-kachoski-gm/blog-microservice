@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/posts", (_, res) => {
+app.get("/api/posts", (_, res) => {
   try {
     const posts = getPosts();
     res.status(200).json({ list: posts });
@@ -20,7 +20,7 @@ app.get("/posts", (_, res) => {
     });
   }
 });
-app.get("/posts/:postId", (req, res) => {
+app.get("/api/posts/:postId", (req, res) => {
   try {
     const id = req.params.postId;
     const post = getPost({ postId: id });
@@ -31,7 +31,7 @@ app.get("/posts/:postId", (req, res) => {
     });
   }
 });
-app.post("/events", (req, res) => {
+app.post("/api/events", (req, res) => {
   try {
     const { type, data } = req.body;
     handleEvents({ type, data });
@@ -44,10 +44,13 @@ app.post("/events", (req, res) => {
 });
 
 app.listen(4002, () => {
-  try {
-    initializeQuery();
-  } catch (error) {
-    console.log("Error loading events.", error);
-  }
+  const init = async () => {
+    try {
+      await initializeQuery();
+    } catch (error) {
+      console.log("Error loading events.", error);
+    }
+  };
+  init();
   console.log("Listening on 4002");
 });

@@ -5,7 +5,7 @@ import { Title } from "./StyledComponents";
 import { FormActions } from "./StyledComponents";
 import { TextInput } from "commons/components/Inputs";
 import { useHistory, useParams } from "react-router-dom";
-import getPostAPI from "query-service/api/get-post";
+import getPostAPI from "posts/api/get-post";
 import createCommentAPI from "comments/api/create-comment";
 import deleteCommentAPI from "comments/api/delete-comment";
 import CommentsList from "./comments-list/List";

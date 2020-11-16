@@ -7,8 +7,9 @@ import getEvents from "events/services/get-events";
 const app = express();
 app.use(bodyParser.json());
 
-app.post("/events", async (req, res) => {
+app.post("/api/events", async (req, res) => {
   const event = req.body;
+  console.log(event.type);
   saveEvent({ event });
 
   const params = {
@@ -19,29 +20,29 @@ app.post("/events", async (req, res) => {
     body: JSON.stringify(event),
   };
   try {
-    await fetch("http://localhost:4000/events", params);
+    await fetch("http://posts-clusterip-srv:4000/api/events", params);
   } catch (error) {
     console.log(error);
   }
   try {
-    await fetch("http://localhost:4001/events", params);
+    await fetch("http://comments-srv:4001/api/events", params);
   } catch (error) {
     console.log(error);
   }
   try {
-    await fetch("http://localhost:4002/events", params);
+    await fetch("http://query-srv:4002/api/events", params);
   } catch (error) {
     console.log(error);
   }
   try {
-    await fetch("http://localhost:4003/events", params);
+    await fetch("http://moderation-srv:4003/api/events", params);
   } catch (error) {
     console.log(error);
   }
   res.status(200).send();
 });
 
-app.get("/events", async (_, res) => {
+app.get("/api/events", async (_, res) => {
   const events = getEvents();
   res.status(200).json({ list: events });
 });

@@ -1,1 +1,1 @@
-export const API_BASE_URL = "http://localhost:4005";
+export const API_BASE_URL = "http://event-bus-srv:4005/api";

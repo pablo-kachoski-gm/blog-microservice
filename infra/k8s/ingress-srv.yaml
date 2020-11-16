@@ -1,0 +1,53 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    #Enable regex in paths
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+    - host: posts-ms.blogms.com
+      http:
+        paths:
+          #POSTS ENDPOINTS
+          - path: /api/posts/create
+            backend:
+              serviceName: posts-clusterip-srv
+              servicePort:
+                4000
+                #QUERY ENDPOINT
+          - path: /api/posts
+            backend:
+              serviceName: query-srv
+              servicePort: 4002
+          #COMMENTS ENDPOINTS
+          - path: /api/posts/?(.*)/comments/create
+            backend:
+              serviceName: comments-srv
+              servicePort: 4001
+          - path: /api/posts/?(.*)/comments/?(.*)/delete
+            backend:
+              serviceName: comments-srv
+              servicePort: 4001
+          - path: /api/posts/?(.*)/comments
+            backend:
+              serviceName: comments-srv
+              servicePort: 4001
+          #POSTS ENDPOINTS
+          - path: /api/posts/?(.*)/delete
+            backend:
+              serviceName: posts-clusterip-srv
+              servicePort: 4000
+
+          #POSTS ENDPOINTS BY ID
+          - path: /api/posts/?(.*)
+            backend:
+              serviceName: query-srv
+              servicePort: 4002
+          #CLIENT - Support react router
+          - path: /?(.*)
+            backend:
+              serviceName: client-srv
+              servicePort: 3000

@@ -3,7 +3,7 @@ import { SubmitButton } from "commons/components/Buttons";
 import createPostAPI from "posts/api/create-post";
 import deletePostAPI from "posts/api/delete-post";
 import PostsList from "./posts-list/List";
-import getPostsAPI from "query-service/api/get-posts";
+import getPostsAPI from "posts/api/get-posts";
 import { Form } from "./StyledComponents";
 import { Title } from "./StyledComponents";
 import { FormActions } from "./StyledComponents";

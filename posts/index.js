@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/posts/:postId", (req, res) => {
+app.get("/api/posts/:postId", (req, res) => {
   try {
     const id = req.params.postId;
     const post = getPost({ id });
@@ -21,7 +21,7 @@ app.get("/posts/:postId", (req, res) => {
     });
   }
 });
-app.get("/posts", (_, res) => {
+app.get("/api/posts", (_, res) => {
   try {
     const posts = getPosts();
     res.status(200).json({ list: posts });
@@ -32,7 +32,7 @@ app.get("/posts", (_, res) => {
   }
 });
 
-app.delete("/posts/:postId", (req, res) => {
+app.delete("/api/posts/:postId/delete", (req, res) => {
   try {
     const id = req.params.postId;
     deletePost({ id });
@@ -43,7 +43,7 @@ app.delete("/posts/:postId", (req, res) => {
     });
   }
 });
-app.post("/posts", async (req, res) => {
+app.post("/api/posts/create", async (req, res) => {
   try {
     const { title } = req.body;
     const newPost = savePost({ title });
@@ -54,8 +54,7 @@ app.post("/posts", async (req, res) => {
     });
   }
 });
-app.post("/events", (req, res) => {
-  console.log("Received Event", req.body.type);
+app.post("/api/events", (req, res) => {
   res.status(200).send();
 });
 app.listen(4000, () => {
